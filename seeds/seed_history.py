@@ -5,13 +5,13 @@ import requests
 from database import db 
 from models import  Player, Club, History
 from utils.dates import days_in_month, idx_to_month_str
-from utils.loaders import print_progress_dots, print_progress_loader  
+from utils.loaders import print_progress_dots  
 
 
 BEGINING_API_URL = "https://api.sportsdata.io/v3/nfl/stats/json/PlayerGameStatsByWeek/"
 END_API_URL = "?key=d8032d128b1a47c9bf299f8061bb41a9"
 
-year_options = ["2023", "2022", "2021", "2020"]
+year_options = ["2023", "2022", "2021"]
 
 
 def display_year_menu():
@@ -79,40 +79,43 @@ def transform_raw_data(raw_data):
     return transformed_data
 
 
-def fetch_player_history_data_by_year(selected_year):
-    all_data = []  
+def fetch_player_history_data():
+    all_data = []
 
-    for week in range(1, 4): 
-        try: 
-            full_url = BEGINING_API_URL + selected_year + "/" + str(week) + END_API_URL
-            print(f"Gathering player history data for {selected_year} week - {week}")
-            
-            response = requests.get(full_url)
-                    
-            if response.status_code == 200:
-                data = response.json()
-                transformed_data = transform_raw_data(data)
-                all_data.extend(transformed_data)  # Add the transformed data to the all_data list
-            else:
-                print(f"API ERROR for {selected_year} week - {week}: {response.status_code}")  
-        except requests.Timeout:
-            print(f"Request for {selected_year} timed out.")
-        except Exception as e:
-            print(f"Error for {selected_year}: {str(e)}")  
-    
+    for selected_year in year_options:
+        for week in range(1, 17):
+            try:
+                full_url = BEGINING_API_URL + selected_year + "/" + str(week) + END_API_URL
+                print(f"Gathering player history data for {selected_year} week - {week}")
+
+                response = requests.get(full_url)
+
+                if response.status_code == 200:
+                    data = response.json()
+                    transformed_data = transform_raw_data(data)
+                    all_data.extend(transformed_data) 
+                else:
+                    print(f"API ERROR for {selected_year} week - {week}: {response.status_code}")
+            except requests.Timeout:
+                print(f"Request for {selected_year} timed out.")
+            except Exception as e:
+                print(f"Error for {selected_year}: {str(e)}")
+
     return all_data
 
-    
+def should_seed_history():
+    return db.query(History).count() == 0
 
 def seed_history():
     print("BEGIN PLAYER HISTORY SEEDING")
     print_progress_dots(12)
-    selected_year = select_timeframe()
-    
-    existing_records = db.query(History).filter(History.season == selected_year).first()
 
-    if not existing_records: 
-        data = fetch_player_history_data_by_year(selected_year)
+    existing_records = should_seed_history() 
+    
+    print("WHAT ARE U", db.query(History).count())
+    
+    if existing_records: 
+        data = fetch_player_history_data()
         
         if data:
             for history_entry in data:
@@ -142,14 +145,12 @@ def seed_history():
                 )
 
                 db.add(history)
-                print_progress_loader()
                 db.commit()
-            print(f"Player's history data added to the database for {selected_year}")
+            print(f"Player's history data added to the database")
         else:
             print(f"No data for selected year to seed")
     else:
-        print(f"History data for {selected_year} already exists in the database.")
+        print(f"History dat already exists in the database.")
 
 if __name__ == "__main__":
     seed_history()
-        

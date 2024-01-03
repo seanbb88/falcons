@@ -2,17 +2,16 @@
 from datetime import datetime
 import time
 import requests
-from requests.exceptions import Timeout
 from database import db 
 from models import Transactions, Player, Club
 from utils.dates import days_in_month, idx_to_month_str
-from utils.loaders import print_progress_dots, print_progress_loader  
+from utils.loaders import print_progress_dots  
 
 
 BEGINING_API_URL = "http://api.sportradar.us/nfl/official/trial/v7/en/league/"
 END_API_URL = "/transactions.json?api_key=36xtbwcx8p72eatag793d75v"
 
-year_options = ["2023", "2022", "2021", "2020"]
+year_options = ["2023", "2022", "2021"]
 
 month_options = ['May','June','July','Aug','Sept']
 
@@ -122,7 +121,6 @@ def seed_transactions():
                 )
 
                 db.add(transactions)
-                print_progress_loader()
                 db.commit()
             print(f"Player's transaction data added to the database for {selected_year}")
         else:

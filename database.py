@@ -2,9 +2,8 @@ from base import Base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy_utils import create_database, database_exists
-from sqlalchemy.ext.declarative import declarative_base
 from models import Club, Player, Transactions, History, Salary
-from utils.sleeper import print_progress_dots
+from utils.loaders import print_progress_dots
 
 
 db_url = "postgresql://seanbrown:password@localhost/falcons"

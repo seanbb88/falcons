@@ -2,7 +2,7 @@
 import requests
 from database import db  
 from models import Club, Player
-from utils.sleeper import print_progress_dots  
+from utils.loaders import print_progress_dots  
 
 
 SPORTS_API_URL = "https://api.sportsdata.io/v3/nfl/scores/json/PlayersBasic/"
