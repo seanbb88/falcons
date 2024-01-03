@@ -3,6 +3,8 @@
 
 from database import initialize_database
 from seeds.seed_club_ag import seed_club_ag
+from seeds.seed_player_rankings import seed_player_rankings_ag
+from seeds.seed_position_ag import seed_position_ag
 from seeds.seed_season_ag import seed_season_ag
 from seeds.seed_clubs import seed_clubs
 from seeds.seed_history import seed_history
@@ -18,6 +20,8 @@ def main():
     # seed_history()
     # seed_club_ag()
     seed_season_ag()
+    seed_position_ag()
+    seed_player_rankings_ag()
 
 if __name__ == "__main__":
     main()

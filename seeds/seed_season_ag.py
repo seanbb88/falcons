@@ -6,45 +6,93 @@ from models.models import SeasonAggregation, History
 from utils.loaders import print_progress_dots
 
 
-def flatten_season_data():
+def flatten_unique_season_data():
     all_data = []
+
+    db.query(History).all()
     
     subquery = (
-    db.query(func.min(History.id).label("min_id")).group_by(History.season, History.club_id).subquery())
+    db.query(func.min(History.id).label("min_id")).group_by(History.season, History.club_id, History.week).subquery())
 
     unique_rows_by_season = (db.query(History).join(subquery, History.id == subquery.c.min_id).all())
   
     for history_season_row in unique_rows_by_season:
         season = history_season_row.season 
+        club = history_season_row.team 
         
-        total_offensive_team_plays = sum(row.offensive_team_plays or 0 for row in unique_rows_by_season if row.season == season)
-        total_defensive_team_plays = sum(row.defensive_team_plays or 0 for row in unique_rows_by_season if row.season == season)
+        flettened_history = History(
+            season=season,
+            team=club,
+            offensive_team_plays=history_season_row.offensive_team_plays,
+            defensive_team_plays=history_season_row.defensive_team_plays
+        )
+        all_data.append(flettened_history)
+    return all_data
 
+def calculate_season_totals(data):
+    if data is None or len(data) == 0:
+        return {}
+
+    season_totals = {}
+
+    for entry in data:
+        season = entry.season
+        offensive_team_plays = entry.offensive_team_plays
+        defensive_team_plays = entry.defensive_team_plays
+
+        if season in season_totals:
+            season_totals[season]['offensive_team_plays'] += offensive_team_plays
+            season_totals[season]['defensive_team_plays'] += defensive_team_plays
+        else:
+            season_totals[season] = {
+                'offensive_team_plays': offensive_team_plays,
+                'defensive_team_plays': defensive_team_plays
+            }
+
+    return season_totals
+
+def add_season_aggregations(data):
+    for season, stats in data.items():
+        offensive_team_plays = stats['offensive_team_plays']
+        defensive_team_plays = stats['defensive_team_plays']
+        total_team_plays = offensive_team_plays + defensive_team_plays
+
+        # Create a new instance of SeasonAggregation
         season_aggregation = SeasonAggregation(
             season=season,
-            total_team_plays=total_offensive_team_plays + total_defensive_team_plays,
-            total_offensive_team_plays=total_offensive_team_plays,
-            total_defensive_team_plays=total_defensive_team_plays
+            total_offensive_team_plays=offensive_team_plays,
+            total_defensive_team_plays=defensive_team_plays,
+            total_team_plays=total_team_plays
         )
-        all_data.append(season_aggregation)
-        
-    return all_data
+
+        # Add the instance to the database session
+        db.add(season_aggregation)
+
+    # Commit the changes to the database
+    db.commit()
+    
+def has_existing_season_aggregations():
+    return db.query(SeasonAggregation).count() > 0
 
 def seed_season_ag():
     print("BEGIN SEEDING AGGREGATED SEASON DATA")
     print_progress_dots(12)
-    
-    data = flatten_season_data()
-    
-    print("LOOP and return dict")
-    
-    # for season_data in data:
-    #     print
 
+    if has_existing_season_aggregations():
+        print("Existing data found for season aggregations. Skipping seeding.")
+        return
 
-    #     db.add(season_aggregation)
+    flattened_data = flatten_unique_season_data()
 
-    # db.commit()
+    if flattened_data:
+        season_totals_data = calculate_season_totals(flattened_data)
+        
+        if season_totals_data:
+            add_season_aggregations(season_totals_data)
+            print("Season aggregations added to database")
+
+    else:
+        print("No data to seed.")
 
 if __name__ == "__main__":
     seed_season_ag()

@@ -59,11 +59,11 @@ class History(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     player_id = Column(Integer, ForeignKey('players.id'))
     name = Column(String, index=True, nullable=True)
-    season = Column(String, nullable=True)
+    season = Column(String, index=True, nullable=True)
     club_id = Column(Integer, ForeignKey('clubs.id'))
     started = Column(Boolean)
     played = Column(Boolean)
-    position = Column(String, nullable=True)
+    position = Column(String, index=True, nullable=True)
     team = Column(String, nullable=True)
     opponent_rank = Column(String, nullable=True)
     offensive_plays = Column(Integer, nullable=True)
@@ -155,3 +155,22 @@ class SeasonAggregation(Base):
     
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, onupdate=func.now())
+    
+class PlayerRankingAggregation(Base):
+    __tablename__ = "player_ranking_aggregations"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    player_id = Column(Integer, ForeignKey('players.id'))
+    active_club_id = Column(Integer, ForeignKey('clubs.id'))
+    season_o_plays_percentile = Column(Float)
+    season_d_plays_percentile = Column(Float)
+    club_o_plays_percentile = Column(Float)
+    club_d_plays_percentile = Column(Float)
+    position_o_plays_percentile = Column(Float)
+    position_d_plays_percentile = Column(Float)
+    
+    player = relationship("Player")
+    club = relationship("Club")
+    
+    created_at = Column(DateTime, default=func.now())
+    updated_at = Column(DateTime, onupdate=func.now())
+    
