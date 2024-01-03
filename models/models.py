@@ -117,3 +117,41 @@ class Transactions(Base):
     player = relationship("Player")
     sending_club = relationship("Club", foreign_keys=[sending_club_id])
     receiving_club = relationship("Club", foreign_keys=[receiving_club_id])
+
+
+class PositionAggregation(Base):
+    __tablename__ = "position_aggregations"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    position = Column(String, nullable=False)
+    total_plays = Column(Integer, nullable=False)
+    total_offensive_plays = Column(Integer, nullable=False)
+    total_defensive_plays = Column(Integer, nullable=False)
+    
+    created_at = Column(DateTime, default=func.now())
+    updated_at = Column(DateTime, onupdate=func.now())
+    
+
+class ClubAggregation(Base):
+    __tablename__ = "club_aggregations"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    club_name = Column(String, nullable=False)
+    total_plays = Column(Integer, nullable=False)
+    total_offensive_plays = Column(Integer, nullable=False)
+    total_defensive_plays = Column(Integer, nullable=False)
+    
+    created_at = Column(DateTime, default=func.now())
+    updated_at = Column(DateTime, onupdate=func.now())
+    
+class SeasonAggregation(Base):
+    __tablename__ = "season_aggregations"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    season = Column(String, nullable=False)
+    total_plays = Column(Integer, nullable=False)
+    total_offensive_plays = Column(Integer, nullable=False)
+    total_defensive_plays = Column(Integer, nullable=False)
+    
+    created_at = Column(DateTime, default=func.now())
+    updated_at = Column(DateTime, onupdate=func.now())

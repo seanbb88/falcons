@@ -112,8 +112,6 @@ def seed_history():
 
     existing_records = should_seed_history() 
     
-    print("WHAT ARE U", db.query(History).count())
-    
     if existing_records: 
         data = fetch_player_history_data()
         
