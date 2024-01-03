@@ -124,9 +124,9 @@ class PositionAggregation(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     position = Column(String, nullable=False)
-    total_plays = Column(Integer, nullable=False)
-    total_offensive_plays = Column(Integer, nullable=False)
-    total_defensive_plays = Column(Integer, nullable=False)
+    total_team_plays = Column(Integer, nullable=False)
+    total_offensive_team_plays = Column(Integer, nullable=False)
+    total_defensive_team_plays = Column(Integer, nullable=False)
     
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, onupdate=func.now())
@@ -137,9 +137,9 @@ class ClubAggregation(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     club_name = Column(String, nullable=False)
-    total_plays = Column(Integer, nullable=False)
-    total_offensive_plays = Column(Integer, nullable=False)
-    total_defensive_plays = Column(Integer, nullable=False)
+    total_team_plays = Column(Integer, nullable=False)
+    total_offensive_team_plays = Column(Integer, nullable=False)
+    total_defensive_team_plays = Column(Integer, nullable=False)
     
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, onupdate=func.now())
@@ -149,9 +149,9 @@ class SeasonAggregation(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     season = Column(String, nullable=False)
-    total_plays = Column(Integer, nullable=False)
-    total_offensive_plays = Column(Integer, nullable=False)
-    total_defensive_plays = Column(Integer, nullable=False)
+    total_team_plays = Column(Integer, nullable=False)
+    total_offensive_team_plays = Column(Integer, nullable=False)
+    total_defensive_team_plays = Column(Integer, nullable=False)
     
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, onupdate=func.now())
