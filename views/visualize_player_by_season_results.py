@@ -45,6 +45,5 @@ def run_sql_query_and_print_results_for_season():
     except Exception as e:
         print(f"Error: {e}")
 
-# Usage:
 if __name__ == "__main__":
     run_sql_query_and_print_results_for_season()

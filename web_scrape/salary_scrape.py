@@ -72,28 +72,46 @@ def scrape_website(url, position):
     except Exception as e:
         print(f"An error occurred: {e}")
         
+def skip_seeding():
+    total_records = db.query(Player).count()
+    return total_records > 0
+        
 def gather_player_salary_information_and_seed():
+    print("SCRAPING AND SAVING PLAYER SALARY DATA")
+    salary_objects = [] 
+    
+    if skip_seeding():
+        print("Salary data already exists. Skipping the scrape.")
+        return
+
     for position_key, url_end in scrape_dictionary.items():
         url = "https://overthecap.com/contract-history/" + url_end
         response = scrape_website(url, position_key)
 
         if response:
             for contract in response:
-                player_name = contract.name  
+                player_name = contract.name
                 player_in_db = db.query(Player).filter(Player.name == player_name).first()
-                
+                formatted_avp = contract.average_per_year.replace("$", "").replace(',', '')
+                formatted_salary = contract.average_per_year.replace("$", "").replace(',', '')
+                formatted_guarantee = contract.average_per_year.replace("$", "").replace(',', '')
+
+
                 salary = Salary(
                     player_id=player_in_db.id if player_in_db is not None else None,
-                    year_signed=contract.year_signed,  
-                    team=contract.team,  
-                    average_per_year=contract.average_per_year,  
-                    salary_amount=contract.total_value, 
-                    guaranteed=contract.guaranteed, 
-                    position=contract.position 
+                    year_signed=contract.year_signed,
+                    team=contract.team,
+                    average_per_year=int(formatted_avp),
+                    salary_amount=int(formatted_salary),
+                    guaranteed=int(formatted_guarantee),
+                    position=contract.position
                 )
-                db.add(salary)
-                db.commit()
-            print(f"Player's salary data added to the database")
+                salary_objects.append(salary) 
+
+
+    db.add_all(salary_objects)
+    db.commit()
+    print(f"Player's salary data added to the database")
 
 if __name__ == "__main__":
     gather_player_salary_information_and_seed()
