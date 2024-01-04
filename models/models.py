@@ -85,17 +85,20 @@ class Salary(Base):
     __tablename__ = "player_salary"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    player_id = Column(Integer, ForeignKey('players.id'))
-    season = Column(Integer, nullable=True)
-    active_club_id = Column(Integer, ForeignKey('clubs.id'))
-    contract_duration = Column(Integer, nullable=True)
-    salary_amount =  Column(Integer, nullable=True)
-    
+    player_id = Column(Integer, ForeignKey('players.id'), nullable=True)
+    name = Column(String, nullable=True)
+    year_signed = Column(String, nullable=True)
+    team = Column(String, nullable=True)
+    average_per_year = Column(String, nullable=True)
+    salary_amount =  Column(String, nullable=True)
+    guaranteed =  Column(String, nullable=True)
+    position = Column(String)
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, onupdate=func.now())
+    def name(self):
+        return self.player.name if self.player else None
     
     player = relationship("Player")
-    club = relationship("Club")
 
 class Transactions(Base):
     __tablename__ = "player_transactions"
@@ -197,4 +200,3 @@ class PlayerRankingClubAggregation(Base):
     
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, onupdate=func.now())
-    
