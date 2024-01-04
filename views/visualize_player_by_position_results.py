@@ -12,7 +12,7 @@ def run_sql_query_and_print_results_for_position():
                     position,
                     offense_plays_percentile AS play_percentile
                 FROM
-                    player_ranking_aggregations_position
+                    player_ranking_position_aggregation
                 WHERE
                     offense_plays_percentile IS NOT NULL
                 UNION ALL
@@ -22,7 +22,7 @@ def run_sql_query_and_print_results_for_position():
                     position,
                     defense_plays_percentile AS play_percentile
                 FROM
-                    player_ranking_aggregations_position
+                    player_ranking_position_aggregation
                 WHERE
                     defense_plays_percentile IS NOT NULL
             )

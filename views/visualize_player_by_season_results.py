@@ -18,7 +18,7 @@ def run_sql_query_and_print_results_for_season():
                     COALESCE(prsa.defense_plays_percentile, prsa.offense_plays_percentile) AS play_percentile,
                     ROW_NUMBER() OVER(PARTITION BY prsa.season ORDER BY COALESCE(prsa.defense_plays_percentile, prsa.offense_plays_percentile) DESC) AS play_rank
                 FROM
-                    player_ranking_aggregations_season AS prsa
+                    player_ranking_season_aggregation AS prsa
                 WHERE
                     COALESCE(prsa.defense_plays_percentile, prsa.offense_plays_percentile) IS NOT NULL
             ) AS ranked_data

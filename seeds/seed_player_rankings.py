@@ -73,7 +73,6 @@ def player_by_club_query():
 def perform_calculations_and_update(player_data, column_name):
     offensive_plays_array = [result.total_sum_offense for result in player_data]
     defensive_plays_array = [result.total_sum_defense for result in player_data]
-    
 
     if column_name == 'season':
         for result in player_data:
@@ -160,18 +159,22 @@ def has_existing_season_aggregations():
     return db.query(PlayerRankingSeasonAggregation).count() > 0
 
 def perform_player_rankings():
-    if has_existing_season_aggregations():
+    if not has_existing_season_aggregations():
+        print("No existing data found. Generating player rankings...")
+        player_by_season_query()
+        player_by_club_query()
+        player_by_position_query()
+    else:
         print("Existing data found. You can skip to results.")
         skip_to_results = input("Skip to results? (Answer y or n): ").strip().lower()
 
         if skip_to_results != 'y':
+            print("SO WE ARE OUT HERE THEN")
             player_by_season_query()
             player_by_club_query()
             player_by_position_query()
         else:
-            return 
-
-
+            return
 
 
 def seed_player_rankings_ag():

@@ -11,7 +11,7 @@ def run_sql_query_and_print_results_for_club():
                     prca.club AS club_name,
                     MAX(prca.offense_plays_percentile) AS max_offensive_percentile
                 FROM
-                    player_ranking_aggregations_club AS prca
+                    player_ranking_club_aggregation AS prca
                 WHERE
                     prca.offense_plays_percentile IS NOT NULL
                 GROUP BY
@@ -22,7 +22,7 @@ def run_sql_query_and_print_results_for_club():
                     prca.club AS club_name,
                     MAX(prca.defense_plays_percentile) AS max_defensive_percentile
                 FROM
-                    player_ranking_aggregations_club AS prca
+                    player_ranking_club_aggregation AS prca
                 WHERE
                     prca.defense_plays_percentile IS NOT NULL
                 GROUP BY
@@ -37,7 +37,7 @@ def run_sql_query_and_print_results_for_club():
             FROM
                 top_offense AS tof
             LEFT JOIN
-                player_ranking_aggregations_club AS pof
+                player_ranking_club_aggregation AS pof
             ON
                 tof.club_name = pof.club
                 AND tof.max_offensive_percentile = pof.offense_plays_percentile
@@ -46,7 +46,7 @@ def run_sql_query_and_print_results_for_club():
             ON
                 tof.club_name = tdf.club_name
             LEFT JOIN
-                player_ranking_aggregations_club AS pdf
+                player_ranking_club_aggregation AS pdf
             ON
                 tdf.club_name = pdf.club
                 AND tdf.max_defensive_percentile = pdf.defense_plays_percentile;

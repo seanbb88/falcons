@@ -160,7 +160,7 @@ class SeasonAggregation(Base):
     updated_at = Column(DateTime, onupdate=func.now())
     
 class PlayerRankingSeasonAggregation(Base):
-    __tablename__ = "player_ranking_aggregations_season"
+    __tablename__ = "player_ranking_season_aggregation"
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)
     player_id = Column(Integer, ForeignKey('players.id'))
@@ -174,7 +174,7 @@ class PlayerRankingSeasonAggregation(Base):
     updated_at = Column(DateTime, onupdate=func.now())
     
 class PlayerRankingPositionAggregation(Base):
-    __tablename__ = "player_ranking_aggregations_position"
+    __tablename__ = "player_ranking_position_aggregation"
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)
     player_id = Column(Integer, ForeignKey('players.id'))
@@ -188,7 +188,7 @@ class PlayerRankingPositionAggregation(Base):
     updated_at = Column(DateTime, onupdate=func.now())
     
 class PlayerRankingClubAggregation(Base):
-    __tablename__ = "player_ranking_aggregations_club"
+    __tablename__ = "player_ranking_club_aggregation"
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)
     player_id = Column(Integer, ForeignKey('players.id'))
