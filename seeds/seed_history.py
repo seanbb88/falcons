@@ -6,10 +6,11 @@ from database import db
 from models import  Player, Club, History
 from utils.dates import days_in_month, idx_to_month_str
 from utils.loaders import print_progress_dots  
+from .constants import SPORTS_IO_API_KEY
 
 
 BEGINING_API_URL = "https://api.sportsdata.io/v3/nfl/stats/json/PlayerGameStatsByWeek/"
-END_API_URL = "?key=d8032d128b1a47c9bf299f8061bb41a9"
+END_API_URL = f"?key={SPORTS_IO_API_KEY}"
 
 year_options = ["2023", "2022", "2021"]
 

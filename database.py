@@ -2,7 +2,7 @@ from base import Base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy_utils import create_database, database_exists
-from models import Club, Player, Transactions, History, Salary, PositionAggregation, ClubAggregation, SeasonAggregation, PlayerRankingAggregation
+from models import Club, Player, Transactions, History, Salary, PositionAggregation, ClubAggregation, SeasonAggregation, PlayerRankingSeasonAggregation, PlayerRankingPositionAggregation, PlayerRankingClubAggregation
 from utils.loaders import print_progress_dots
 
 

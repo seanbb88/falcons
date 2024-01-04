@@ -1,0 +1,2 @@
+SPORTS_IO_API_KEY = "6f1ce3bc195a49ddae34cb0ff638b63c"
+SPORTS_RADAR_API_KEY = "shjkk5b842b28jncxxm9dp55"

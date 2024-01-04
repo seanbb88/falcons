@@ -6,10 +6,11 @@ from database import db
 from models import Transactions, Player, Club
 from utils.dates import days_in_month, idx_to_month_str
 from utils.loaders import print_progress_dots  
+from .constants import SPORTS_RADAR_API_KEY
 
 
 BEGINING_API_URL = "http://api.sportradar.us/nfl/official/trial/v7/en/league/"
-END_API_URL = "/transactions.json?api_key=36xtbwcx8p72eatag793d75v"
+END_API_URL = f"/transactions.json?api_key={SPORTS_RADAR_API_KEY}"
 
 year_options = ["2023", "2022", "2021"]
 

@@ -156,20 +156,44 @@ class SeasonAggregation(Base):
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, onupdate=func.now())
     
-class PlayerRankingAggregation(Base):
-    __tablename__ = "player_ranking_aggregations"
+class PlayerRankingSeasonAggregation(Base):
+    __tablename__ = "player_ranking_aggregations_season"
     id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String)
     player_id = Column(Integer, ForeignKey('players.id'))
-    active_club_id = Column(Integer, ForeignKey('clubs.id'))
-    season_o_plays_percentile = Column(Float)
-    season_d_plays_percentile = Column(Float)
-    club_o_plays_percentile = Column(Float)
-    club_d_plays_percentile = Column(Float)
-    position_o_plays_percentile = Column(Float)
-    position_d_plays_percentile = Column(Float)
+    season = Column(String)
+    defense_plays_percentile = Column(Float, nullable=True)
+    offense_plays_percentile = Column(Float, nullable=True)
+
+    player = relationship("Player")
+    
+    created_at = Column(DateTime, default=func.now())
+    updated_at = Column(DateTime, onupdate=func.now())
+    
+class PlayerRankingPositionAggregation(Base):
+    __tablename__ = "player_ranking_aggregations_position"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String)
+    player_id = Column(Integer, ForeignKey('players.id'))
+    position = Column(String)
+    defense_plays_percentile = Column(Float, nullable=True)
+    offense_plays_percentile = Column(Float, nullable=True)
     
     player = relationship("Player")
-    club = relationship("Club")
+    
+    created_at = Column(DateTime, default=func.now())
+    updated_at = Column(DateTime, onupdate=func.now())
+    
+class PlayerRankingClubAggregation(Base):
+    __tablename__ = "player_ranking_aggregations_club"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String)
+    player_id = Column(Integer, ForeignKey('players.id'))
+    club = Column(String)
+    defense_plays_percentile = Column(Float, nullable=True)
+    offense_plays_percentile = Column(Float, nullable=True)
+    
+    player = relationship("Player")
     
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, onupdate=func.now())

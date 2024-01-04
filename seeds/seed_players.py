@@ -3,10 +3,11 @@ import requests
 from database import db  
 from models import Club, Player
 from utils.loaders import print_progress_dots  
+from .constants import SPORTS_IO_API_KEY
 
 
 SPORTS_API_URL = "https://api.sportsdata.io/v3/nfl/scores/json/PlayersBasic/"
-SPORTS_API_KEY = "?key=d8032d128b1a47c9bf299f8061bb41a9"
+SPORTS_API_KEY = f"?key={SPORTS_IO_API_KEY}"
 
 
 def fetch_sportsio_player_data(team_abbrv):
