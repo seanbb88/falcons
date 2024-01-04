@@ -6,9 +6,7 @@ from utils.loaders import print_progress_dots
 
 def flatten_unique_position_data():
     all_data = []
-
-    # You might need to query the data you want to process here, like in the working file
-
+    
     subquery = (
         db.query(func.min(History.id).label("min_id")).group_by(History.position, History.club_id, History.week).subquery())
 

@@ -56,8 +56,7 @@ def add_season_aggregations(data):
         offensive_team_plays = stats['offensive_team_plays']
         defensive_team_plays = stats['defensive_team_plays']
         total_team_plays = offensive_team_plays + defensive_team_plays
-
-        # Create a new instance of SeasonAggregation
+        
         season_aggregation = SeasonAggregation(
             season=season,
             total_offensive_team_plays=offensive_team_plays,
@@ -65,10 +64,8 @@ def add_season_aggregations(data):
             total_team_plays=total_team_plays
         )
 
-        # Add the instance to the database session
         db.add(season_aggregation)
 
-    # Commit the changes to the database
     db.commit()
     
 def has_existing_season_aggregations():

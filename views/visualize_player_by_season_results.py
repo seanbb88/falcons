@@ -9,29 +9,24 @@ def run_sql_query_and_print_results_for_season():
         SELECT
             season,
             name,
-            defense_plays_percentile,
-            offense_plays_percentile
+            play_percentile
         FROM
             (
                 SELECT
                     prsa.season,
                     prsa.name,
-                    prsa.defense_plays_percentile,
-                    prsa.offense_plays_percentile,
-                    ROW_NUMBER() OVER(PARTITION BY prsa.season ORDER BY prsa.defense_plays_percentile DESC) AS defense_rank,
-                    ROW_NUMBER() OVER(PARTITION BY prsa.season ORDER BY prsa.offense_plays_percentile DESC) AS offense_rank
+                    COALESCE(prsa.defense_plays_percentile, prsa.offense_plays_percentile) AS play_percentile,
+                    ROW_NUMBER() OVER(PARTITION BY prsa.season ORDER BY COALESCE(prsa.defense_plays_percentile, prsa.offense_plays_percentile) DESC) AS play_rank
                 FROM
                     player_ranking_aggregations_season AS prsa
                 WHERE
-                    prsa.defense_plays_percentile IS NOT NULL
-                    AND prsa.offense_plays_percentile IS NOT NULL
+                    COALESCE(prsa.defense_plays_percentile, prsa.offense_plays_percentile) IS NOT NULL
             ) AS ranked_data
         WHERE
-            defense_rank <= 5 OR offense_rank <= 5
+            play_rank <= 25
         ORDER BY
             season ASC,
-            defense_plays_percentile DESC,
-            offense_plays_percentile DESC;
+            play_percentile DESC;
         """
 
         with engine.connect() as connection:
@@ -40,13 +35,12 @@ def run_sql_query_and_print_results_for_season():
         results = result.fetchall()
 
         print("------------------------")
-        print("TOP POSITION PLAYERS BY SEASON")
+        print("TOP 25 PLAYERS BY PERCENTILE/SEASON")
         print("------------------------")
-        print("{:<10} {:<20} {:<25} {:<25}".format("Season", "Name", "Offensive Percentile", "Defensive Percentile"))
+        print("{:<10} {:<20} {:<25}".format("Season", "Name", "Play Percentile"))
         for row in results:
-            season, name, defense_percentile, offense_percentile = row
-            print("{:<10} {:<20} {:<25} {:<25}".format(season, name, offense_percentile, defense_percentile))
-
+            season, name, play_percentile = row
+            print("{:<10} {:<20} {:<25}".format(season, name, play_percentile))
 
     except Exception as e:
         print(f"Error: {e}")

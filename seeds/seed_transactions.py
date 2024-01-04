@@ -17,31 +17,6 @@ year_options = ["2023", "2022", "2021"]
 month_options = ['May','June','July','Aug','Sept']
 
 
-
-def display_year_menu():
-    print("Please select an input number corresponding to the year in which to seed player transactions")
-    print("---------------------------------")
-    for idx, year in enumerate(year_options, start=1):
-        print(f"{idx}. {year}")
-
-        
-
-def select_timeframe():
-    while True:
-        display_year_menu()
-
-        try:
-            selected_year = int(input("Select a year (enter the corresponding number): ").strip())
-            
-            if 1 <= selected_year <= len(year_options):
-                selected_year = year_options[selected_year - 1]
-                return selected_year
-            else:
-                print("Invalid year selection. Please choose a valid year.")
-        except ValueError:
-            print("Invalid input for year. Please enter a valid number.")
-            
-
 def transform_raw_data(raw_data):
     transformed_data = []
     
@@ -63,7 +38,7 @@ def transform_raw_data(raw_data):
     return transformed_data
 
 
-def fetch_player_transaction_data(selected_year):
+def fetch_player_transaction_data():
     all_data = []  
     for index, _ in enumerate(month_options, start=1):
         total_days = days_in_month(index)
@@ -71,9 +46,9 @@ def fetch_player_transaction_data(selected_year):
         month_data = [] 
         for day in range(1, total_days + 1): 
             try:
-                full_url = BEGINING_API_URL + selected_year + "/" + month_number + "/" + str(day) + END_API_URL
+                full_url = BEGINING_API_URL + '2023' + "/" + month_number + "/" + str(day) + END_API_URL
                 
-                print(f"Gathering player transaction data for {month_number}/{day}/{selected_year}")
+                print(f"Gathering player transaction data for {month_number}/{day}/2023")
                 
                 response = requests.get(full_url) 
                 time.sleep(1)
@@ -81,11 +56,11 @@ def fetch_player_transaction_data(selected_year):
                     data = response.json()
                     month_data.extend(transform_raw_data(data))  
                 else:
-                    print(f"API ERROR for {month_number}/{day}/{selected_year}: {response.status_code}")
+                    print(f"API ERROR for {month_number}/{day}/2023: {response.status_code}")
             except requests.Timeout:
-                print(f"Request for {month_number}/{day}/{selected_year} timed out.")
+                print(f"Request for {month_number}/{day}/2023 timed out.")
             except Exception as e:
-                print(f"Error for {month_number}/{day}/{selected_year}: {str(e)}")
+                print(f"Error for {month_number}/{day}/2023: {str(e)}")
         
         all_data.extend(month_data) 
     
@@ -94,12 +69,11 @@ def fetch_player_transaction_data(selected_year):
 def seed_transactions():
     print("BEGIN PLAYER TRANSACTIONS SEEDING")
     print_progress_dots(12)
-    selected_year = select_timeframe()
 
-    existing_records = db.query(Transactions).filter(Transactions.transaction_year == selected_year).first()
+    existing_records = db.query(Transactions).filter(Transactions.transaction_year == '2023').first()
 
     if not existing_records:
-        data = fetch_player_transaction_data(selected_year)
+        data = fetch_player_transaction_data()
 
         if data:
             for transaction in data:
@@ -118,16 +92,16 @@ def seed_transactions():
                     description=transaction.get("description"),
                     sending_club_id=sending_club.id if sending_club is not None else None,
                     receiving_club_id=receiving_club.id if receiving_club is not None else None,
-                    transaction_year=selected_year
+                    transaction_year='2023'
                 )
 
                 db.add(transactions)
                 db.commit()
-            print(f"Player's transaction data added to the database for {selected_year}")
+            print(f"Player's transaction data added to the database for 2023")
         else:
             print(f"No data for selected year to seed")
     else:
-        print(f"Transactions data for {selected_year} already exists in the database.")
+        print(f"Transactions data for 2023 already exists in the database.")
 
 if __name__ == "__main__":
     seed_transactions()

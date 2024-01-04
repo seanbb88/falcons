@@ -13,30 +13,7 @@ BEGINING_API_URL = "https://api.sportsdata.io/v3/nfl/stats/json/PlayerGameStatsB
 END_API_URL = f"?key={SPORTS_IO_API_KEY}"
 
 year_options = ["2023", "2022", "2021"]
-
-
-def display_year_menu():
-    print("Please select an input number corresponding to the year in which to seed player history")
-    print("---------------------------------")
-    for idx, year in enumerate(year_options, start=1):
-        print(f"{idx}. {year}")
-
-    
-def select_timeframe():
-    while True:
-        display_year_menu()
-
-        try:
-            selected_year = int(input("Select a year (enter the corresponding number): ").strip())
-            
-            if 1 <= selected_year <= len(year_options):
-                selected_year = year_options[selected_year - 1]
-                return selected_year
-            else:
-                print("Invalid year selection. Please choose a valid year.")
-        except ValueError:
-            print("Invalid input for year. Please enter a valid number.")
-            
+      
 
 def transform_raw_data(raw_data):
     transformed_data = []

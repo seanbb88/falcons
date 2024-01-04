@@ -7,10 +7,10 @@ def calculate_percentile(data, value):
     sorted_data = sorted(x for x in data if x is not None)
 
     if not sorted_data:
-        return None  # Handle the case when all values are None
+        return None
     
     if value is None:
-        return None  # Handle the case when the target value is None
+        return None 
     
     position = 0
     for i, x in enumerate(sorted_data):
@@ -76,7 +76,6 @@ def perform_calculations_and_update(player_data, column_name):
     
 
     if column_name == 'season':
-        # Handle updates based on season
         for result in player_data:
             player_id = result.player_id
             player_name = result.name, 
@@ -87,7 +86,6 @@ def perform_calculations_and_update(player_data, column_name):
             player_ranking_aggregation = db.query(PlayerRankingSeasonAggregation).filter_by(player_id=player_id, season=season).first()
             
             if player_ranking_aggregation:
-                # If a record exists, update it
                 db.query(PlayerRankingSeasonAggregation).filter_by(player_id=player_id, season=season).update({
                     PlayerRankingSeasonAggregation.offense_plays_percentile: off_percentile,
                     PlayerRankingSeasonAggregation.defense_plays_percentile: def_percentile

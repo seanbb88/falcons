@@ -52,15 +52,12 @@ def run_sql_query_and_print_results_for_club():
                 AND tdf.max_defensive_percentile = pdf.defense_plays_percentile;
         """
 
-        # Execute the SQL query using the engine
         with engine.connect() as connection:
             result = connection.execute(text(sql_query))
 
-        # Fetch all the rows from the result set
         results = result.fetchall()
 
 
-# Print the results in a formatted column format
         print("------------------------")
         print("TOP PLAYERS BY CLUB")
         print("------------------------")
@@ -72,6 +69,5 @@ def run_sql_query_and_print_results_for_club():
     except Exception as e:
         print(f"Error: {e}")
 
-# Usage:
 if __name__ == "__main__":
     run_sql_query_and_print_results_for_club()
