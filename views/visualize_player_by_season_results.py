@@ -34,15 +34,14 @@ def run_sql_query_and_print_results_for_season():
             offense_plays_percentile DESC;
         """
 
-        # Execute the SQL query using the engine
         with engine.connect() as connection:
             result = connection.execute(text(sql_query))
 
-        # Fetch all the rows from the result set
         results = result.fetchall()
 
-      # Print the results in a formatted column format
+        print("------------------------")
         print("TOP POSITION PLAYERS BY SEASON")
+        print("------------------------")
         print("{:<10} {:<20} {:<25} {:<25}".format("Season", "Name", "Offensive Percentile", "Defensive Percentile"))
         for row in results:
             season, name, defense_percentile, offense_percentile = row

@@ -6,42 +6,50 @@ def run_sql_query_and_print_results_for_club():
     try:
         
         sql_query = """
-            WITH ranked_offense AS (
+            WITH top_offense AS (
                 SELECT
-                    prca.club,
-                    prca.name AS offense_name,
-                    prca.offense_plays_percentile,
-                    ROW_NUMBER() OVER(PARTITION BY prca.club ORDER BY prca.offense_plays_percentile DESC) AS offense_rank
+                    prca.club AS club_name,
+                    MAX(prca.offense_plays_percentile) AS max_offensive_percentile
                 FROM
                     player_ranking_aggregations_club AS prca
                 WHERE
                     prca.offense_plays_percentile IS NOT NULL
+                GROUP BY
+                    prca.club
             ),
-            ranked_defense AS (
+            top_defense AS (
                 SELECT
-                    prca.club,
-                    prca.name AS defense_name,
-                    prca.defense_plays_percentile,
-                    ROW_NUMBER() OVER(PARTITION BY prca.club ORDER BY prca.defense_plays_percentile DESC) AS defense_rank
+                    prca.club AS club_name,
+                    MAX(prca.defense_plays_percentile) AS max_defensive_percentile
                 FROM
                     player_ranking_aggregations_club AS prca
                 WHERE
                     prca.defense_plays_percentile IS NOT NULL
+                GROUP BY
+                    prca.club
             )
             SELECT
-                ro.club AS club_name,
-                ro.offense_name AS top_offensive_performer,
-                ro.offense_plays_percentile AS offensive_percentile,
-                rd.defense_name AS top_defensive_performer,
-                rd.defense_plays_percentile AS defensive_percentile
+                tof.club_name,
+                pof.name AS top_offensive_player_name,
+                tof.max_offensive_percentile AS offensive_percentile,
+                pdf.name AS top_defensive_player_name,
+                tdf.max_defensive_percentile AS defensive_percentile
             FROM
-                ranked_offense AS ro
-            JOIN
-                ranked_defense AS rd
+                top_offense AS tof
+            LEFT JOIN
+                player_ranking_aggregations_club AS pof
             ON
-                ro.club = rd.club
-                AND ro.offense_rank = 1
-                AND rd.defense_rank = 1;
+                tof.club_name = pof.club
+                AND tof.max_offensive_percentile = pof.offense_plays_percentile
+            LEFT JOIN
+                top_defense AS tdf
+            ON
+                tof.club_name = tdf.club_name
+            LEFT JOIN
+                player_ranking_aggregations_club AS pdf
+            ON
+                tdf.club_name = pdf.club
+                AND tdf.max_defensive_percentile = pdf.defense_plays_percentile;
         """
 
         # Execute the SQL query using the engine
@@ -51,13 +59,15 @@ def run_sql_query_and_print_results_for_club():
         # Fetch all the rows from the result set
         results = result.fetchall()
 
-      # Print the results in a formatted column format
-        print("TOP PLAYERS BY CLUB")
-        print("{:<10} {:<20} {:<25} {:<25}".format("Season", "Name", "Offensive Percentile", "Defensive Percentile"))
-        for row in results:
-            season, name, defense_percentile, offense_percentile = row
-            print("{:<10} {:<20} {:<25} {:<25}".format(season, name, offense_percentile, defense_percentile))
 
+# Print the results in a formatted column format
+        print("------------------------")
+        print("TOP PLAYERS BY CLUB")
+        print("------------------------")
+        print("{:<10} {:<25} {:<25} {:<25} {:<25}".format("Club", "Top Offensive Player", "Offensive Percentile", "Top Defensive Player", "Defensive Percentile"))
+        for row in results:
+            club_name, top_off_player_name, offensive_percentile, top_def_player_name, defensive_percentile = row
+            print("{:<10} {:<25} {:<25} {:<25} {:<25}".format(club_name, top_off_player_name, offensive_percentile, top_def_player_name, defensive_percentile))
 
     except Exception as e:
         print(f"Error: {e}")

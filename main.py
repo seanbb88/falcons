@@ -10,6 +10,8 @@ from seeds.seed_clubs import seed_clubs
 from seeds.seed_history import seed_history
 from seeds.seed_players import seed_players
 from seeds.seed_transactions import seed_transactions
+from views.visualize_player_by_club_results import run_sql_query_and_print_results_for_club
+from views.visualize_player_by_position_results import run_sql_query_and_print_results_for_position
 from views.visualize_player_by_season_results import run_sql_query_and_print_results_for_season
 
 
@@ -24,6 +26,8 @@ def main():
     seed_position_ag()
     seed_player_rankings_ag()
     run_sql_query_and_print_results_for_season()
+    run_sql_query_and_print_results_for_club()
+    run_sql_query_and_print_results_for_position()
 
 if __name__ == "__main__":
     main()

@@ -157,14 +157,23 @@ def perform_calculations_and_update(player_data, column_name):
         pass
 
     db.commit()
-
+    
+def has_existing_season_aggregations():
+    return db.query(PlayerRankingSeasonAggregation).count() > 0
 
 def perform_player_rankings():
-    player_by_season_query()
-    player_by_club_query()
-    player_by_position_query()
+    if has_existing_season_aggregations():
+        print("Existing data found. You can skip to results.")
+        skip_to_results = input("Skip to results? (Answer y or n): ").strip().lower()
 
-    return 
+        if skip_to_results != 'y':
+            player_by_season_query()
+            player_by_club_query()
+            player_by_position_query()
+        else:
+            return 
+
+
 
 
 def seed_player_rankings_ag():
