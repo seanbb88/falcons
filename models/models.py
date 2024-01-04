@@ -48,10 +48,10 @@ class Player(Base):
     status = Column(String, nullable=True)
     headshot_url = Column(String, nullable=True)
     
+    active_team = relationship('Club', foreign_keys=[active_club_id])
+    
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, onupdate=func.now())
-    
-    active_team = relationship('Club', foreign_keys=[active_club_id])
 
 class History(Base):
     __tablename__ = "player_history"
@@ -75,11 +75,11 @@ class History(Base):
     week = Column(Integer, nullable=True)
     game_date = Column(DateTime, nullable=True)
     
-    created_at = Column(DateTime, default=func.now())
-    updated_at = Column(DateTime, onupdate=func.now())
-    
     player = relationship("Player")
     club = relationship("Club")
+    
+    created_at = Column(DateTime, default=func.now())
+    updated_at = Column(DateTime, onupdate=func.now())
 
 class Salary(Base):
     __tablename__ = "player_salary"
@@ -93,12 +93,13 @@ class Salary(Base):
     salary_amount =  Column(Integer, nullable=True)
     guaranteed =  Column(Integer, nullable=True)
     position = Column(String)
-    created_at = Column(DateTime, default=func.now())
-    updated_at = Column(DateTime, onupdate=func.now())
     def name(self):
         return self.player.name if self.player else None
     
     player = relationship("Player")
+    
+    created_at = Column(DateTime, default=func.now())
+    updated_at = Column(DateTime, onupdate=func.now())
 
 class Transactions(Base):
     __tablename__ = "player_transactions"
@@ -114,12 +115,12 @@ class Transactions(Base):
     receiving_club_id = Column(Integer, ForeignKey('clubs.id'))
     transaction_year = Column(String, nullable=True)
     
-    created_at = Column(DateTime, default=func.now())
-    updated_at = Column(DateTime, onupdate=func.now())
-    
     player = relationship("Player")
     sending_club = relationship("Club", foreign_keys=[sending_club_id])
     receiving_club = relationship("Club", foreign_keys=[receiving_club_id])
+    
+    created_at = Column(DateTime, default=func.now())
+    updated_at = Column(DateTime, onupdate=func.now())
 
 
 class PositionAggregation(Base):
