@@ -14,7 +14,7 @@ END_API_URL = f"/transactions.json?api_key={SPORTS_RADAR_API_KEY}"
 
 year_options = ["2023", "2022", "2021"]
 
-month_options = ['May','June','July','Aug','Sept']
+month_options = ['June','July','Aug','Sept']
 
 
 def transform_raw_data(raw_data):

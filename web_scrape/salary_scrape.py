@@ -16,21 +16,21 @@ class PlayerContract:
 
 
 scrape_dictionary = {
-    # "QB": "quarterback", 
+    "QB": "quarterback", 
     "RB": "running-back", 
-    # "WR": "wide-receiver", 
-    # "TE": "tight-end", 
-    # "LT": "left-tackle", 
-    # "LG": "left-guard", 
-    # "C": "center", 
-    # "RG": 'right-guard', 
-    # "RT": 'right-tackle', 
-    # "DL": 'interior-defensive-line', 
-    # "LB": 'linebacker', 
-    # "S": 'safety', 
-    # "CB": "cornerback", 
-    # "K": "kicker", 
-    # "P": 'punter'
+    "WR": "wide-receiver", 
+    "TE": "tight-end", 
+    "LT": "left-tackle", 
+    "LG": "left-guard", 
+    "C": "center", 
+    "RG": 'right-guard', 
+    "RT": 'right-tackle', 
+    "DL": 'interior-defensive-line', 
+    "LB": 'linebacker', 
+    "S": 'safety', 
+    "CB": "cornerback", 
+    "K": "kicker", 
+    "P": 'punter'
 }
 
 def scrape_website(url, position):
@@ -79,17 +79,17 @@ def gather_player_salary_information_and_seed():
 
         if response:
             for contract in response:
-                player_name = contract.name  # Use dot notation to access attributes
+                player_name = contract.name  
                 player_in_db = db.query(Player).filter(Player.name == player_name).first()
                 
                 salary = Salary(
                     player_id=player_in_db.id if player_in_db is not None else None,
-                    year_signed=contract.year_signed,  # Use dot notation
-                    team=contract.team,  # Use dot notation
-                    average_per_year=contract.average_per_year,  # Use dot notation
-                    salary_amount=contract.total_value,  # Use dot notation
-                    guaranteed=contract.guaranteed,  # Use dot notation
-                    position=contract.position  # Use dot notation
+                    year_signed=contract.year_signed,  
+                    team=contract.team,  
+                    average_per_year=contract.average_per_year,  
+                    salary_amount=contract.total_value, 
+                    guaranteed=contract.guaranteed, 
+                    position=contract.position 
                 )
                 db.add(salary)
                 db.commit()

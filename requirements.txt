@@ -2,3 +2,4 @@ SQLAlchemy==2.0.24
 sqlalchemy-utils==0.41.1  
 psycopg2==2.9.9
 requests==2.31.0
+beautifulsoup4==4.12.2

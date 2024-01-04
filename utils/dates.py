@@ -16,11 +16,10 @@ def days_in_month(month):
     return days_in_month[month]
 
 def idx_to_month_str(idx):
-    month_str = { 
-        1: '05',  
-        2: '06', 
-        3: '07',
-        4: '08',
-        5: '09',  
+    month_str = {   
+        1: '06', 
+        2: '07',
+        3: '08',
+        4: '09',  
     }
     return month_str[idx]

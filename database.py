@@ -6,17 +6,19 @@ from models import Club, Player, Transactions, History, Salary, PositionAggregat
 from utils.loaders import print_progress_dots
 
 
-db_url = "postgresql://seanbrown:password@localhost/falcons"
+local_connection_string = "postgresql://seanbrown:password@localhost/"
+database = 'falcons'
+full_connection_string = local_connection_string + database
 
 def initialize_database():
     print("INITIALIZING DATABASE (IF NEEDED)")
     print_progress_dots(12)
-    if not database_exists(db_url):
-        create_database(db_url) 
+    if not database_exists(full_connection_string):
+        create_database(full_connection_string) 
     Base.metadata.create_all(bind=engine)
     
 
-engine = create_engine(db_url)
+engine = create_engine(full_connection_string)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 db = SessionLocal()
 
