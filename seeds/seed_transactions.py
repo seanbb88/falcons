@@ -12,7 +12,7 @@ from utils.constants import TRANSACTIONS_SEED_URL_BEGINNING, TRANSACTIONS_SEED_U
 
 year_options = ["2023", "2022", "2021"]
 
-month_options = ['June','July','Aug','Sept']
+month_options = ['Aug','Sept']
 
 
 def transform_raw_data(raw_data):
@@ -65,7 +65,7 @@ def fetch_player_transaction_data():
     return all_data 
 
 def seed_transactions():
-    print("BEGIN PLAYER TRANSACTIONS SEEDING")
+    print("BEGIN PLAYER TRANSACTIONS SEEDING (AUG - SEPT of 2023)")
     print_progress_dots(12)
 
     try:

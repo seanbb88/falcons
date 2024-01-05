@@ -28,11 +28,14 @@ The app populates the database with the following data:
 
 - Player Salary: Salary information including team, year signed, average per year, salary amount, guarantee, and position
 
-- ClubAggregation: A data set that consists of the total offensive and defensive team plays per club over the gathered data period (2021 - 2023)
+- Club Aggregation: 
+- Position Aggregation:
+- Season Aggregation:
+datasets that consists of the total offensive and defensive team plays per either club, season, or position over the gathered data period (2021 - 2023)
 
-- PositionAggregation: A data set that consists of the total offensive and defensive plays per position over the gathered data period (2021 - 2023)
+-Player Rankings:
+dataset that consists of players player percentile rank compared to the above data for clubs, positions, and seasons
 
-- SeasonAggregation: A data set that consists of the total offensive and defensive plays per season over the gathered data period (2021 - 2023)
 
 ### Calculations
 
