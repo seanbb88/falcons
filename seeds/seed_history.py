@@ -4,7 +4,6 @@ import time
 import requests
 from database import db 
 from models import  Player, Club, History
-from utils.dates import days_in_month, idx_to_month_str
 from utils.loaders import print_progress_dots  
 from utils.constants import HISTORY_SEED_URL_BEGINNING, HISTORY_SEED_URL_ENDING
 
@@ -123,7 +122,7 @@ def seed_history():
         else:
             print(f"No data for selected year to seed")
     else:
-        print(f"History dat already exists in the database.")
+        print(f"History data already exists in the database.")
 
 if __name__ == "__main__":
     seed_history()

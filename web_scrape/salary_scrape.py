@@ -74,7 +74,6 @@ def scrape_website(url, position):
         
 def skip_seeding():
     total_records = db.query(Salary).count()
-    print("TOTAL RECORDS COUNT", total_records)
     return total_records > 0
         
 def gather_player_salary_information_and_seed():

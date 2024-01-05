@@ -14,25 +14,25 @@ from views.finished import print_finished_message
 from views.visualize_player_by_club_results import run_sql_query_and_print_results_for_club
 from views.visualize_player_by_position_results import run_sql_query_and_print_results_for_position
 from views.visualize_player_by_season_results import run_sql_query_and_print_results_for_season
-from views.visualize_player_salary_results import run_sql_query_and_print_results_for_salary
+from views.visualize_player_salary_results import run_salary_queries
 from web_scrape.salary_scrape import gather_player_salary_information_and_seed
 
 
 def main():
     initialize_database()
-    seed_clubs()
-    seed_players()
-    seed_transactions()
-    seed_history()
-    seed_club_ag()
-    seed_season_ag()
-    seed_position_ag()
-    seed_player_rankings_ag()
-    gather_player_salary_information_and_seed()
-    run_sql_query_and_print_results_for_season()
-    run_sql_query_and_print_results_for_club()
-    run_sql_query_and_print_results_for_position()
-    run_sql_query_and_print_results_for_salary()
+    # seed_clubs()
+    # seed_players()
+    # seed_transactions()
+    # seed_history()
+    # seed_club_ag()
+    # seed_season_ag()
+    # seed_position_ag()
+    # gather_player_salary_information_and_seed()
+    # seed_player_rankings_ag()
+    # run_sql_query_and_print_results_for_season()
+    # run_sql_query_and_print_results_for_club()
+    # run_sql_query_and_print_results_for_position()
+    run_salary_queries()
     print_finished_message()
 
 

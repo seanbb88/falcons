@@ -42,6 +42,8 @@ def run_sql_query_and_print_results_for_season():
             season, name, play_percentile = row
             print("{:<10} {:<20} {:<25}".format(season, name, play_percentile))
 
+        print("------------------------------------------------------------------")
+        print("------------------------------------------------------------------")
     except Exception as e:
         print(f"Error: {e}")
 

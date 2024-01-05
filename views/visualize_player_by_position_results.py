@@ -51,6 +51,8 @@ def run_sql_query_and_print_results_for_position():
             player_name, play_percentile, player_id, position = row
             print("{:<25} {:<10} {:<25} {:<15}".format(player_name, player_id, play_percentile, position))
 
+        print("------------------------------------------------------------------")
+        print("------------------------------------------------------------------")
     except Exception as e:
         print(f"Error: {e}")
 

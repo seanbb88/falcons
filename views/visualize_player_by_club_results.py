@@ -66,6 +66,8 @@ def run_sql_query_and_print_results_for_club():
             club_name, top_off_player_name, offensive_percentile, top_def_player_name, defensive_percentile = row
             print("{:<10} {:<25} {:<25} {:<25} {:<25}".format(club_name, top_off_player_name, offensive_percentile, top_def_player_name, defensive_percentile))
 
+        print("------------------------------------------------------------------")
+        print("------------------------------------------------------------------")
     except Exception as e:
         print(f"Error: {e}")
 

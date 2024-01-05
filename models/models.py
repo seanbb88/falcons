@@ -89,15 +89,12 @@ class Salary(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     player_id = Column(Integer, ForeignKey('players.id'), nullable=True)
-    name = Column(String, nullable=True)
     year_signed = Column(String, nullable=True)
     team = Column(String, nullable=True)
     average_per_year = Column(Integer, nullable=True)
     total_value =  Column(Integer, nullable=True)
     guaranteed =  Column(Integer, nullable=True)
     position = Column(String)
-    def name(self):
-        return self.player.name if self.player else None
     
     player = relationship("Player")
     
