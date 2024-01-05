@@ -159,13 +159,14 @@ def has_existing_season_aggregations():
     return db.query(PlayerRankingSeasonAggregation).count() > 0
 
 def perform_player_rankings():
+    
     if not has_existing_season_aggregations():
         print("No existing data found. Generating player rankings...")
         player_by_season_query()
         player_by_club_query()
         player_by_position_query()
     else:
-        print("Existing data found. You can skip to results.")
+        print("Existing player ranking aggregations found. You can skip to results or re-reun them")
         skip_to_results = input("Skip to results? (Answer y or n): ").strip().lower()
 
         if skip_to_results != 'y':

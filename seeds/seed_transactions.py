@@ -6,11 +6,9 @@ from database import db
 from models import Transactions, Player, Club
 from utils.dates import days_in_month, idx_to_month_str
 from utils.loaders import print_progress_dots  
-from .constants import SPORTS_RADAR_API_KEY
+from utils.constants import TRANSACTIONS_SEED_URL_BEGINNING, TRANSACTIONS_SEED_URL_ENDING
 
 
-BEGINING_API_URL = "http://api.sportradar.us/nfl/official/trial/v7/en/league/"
-END_API_URL = f"/transactions.json?api_key={SPORTS_RADAR_API_KEY}"
 
 year_options = ["2023", "2022", "2021"]
 
@@ -46,7 +44,7 @@ def fetch_player_transaction_data():
         month_data = [] 
         for day in range(1, total_days + 1): 
             try:
-                full_url = BEGINING_API_URL + '2023' + "/" + month_number + "/" + str(day) + END_API_URL
+                full_url = TRANSACTIONS_SEED_URL_BEGINNING + month_number + "/" + str(day) + TRANSACTIONS_SEED_URL_ENDING
                 
                 print(f"Gathering player transaction data for {month_number}/{day}/2023")
                 

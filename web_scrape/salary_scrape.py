@@ -73,7 +73,8 @@ def scrape_website(url, position):
         print(f"An error occurred: {e}")
         
 def skip_seeding():
-    total_records = db.query(Player).count()
+    total_records = db.query(Salary).count()
+    print("TOTAL RECORDS COUNT", total_records)
     return total_records > 0
         
 def gather_player_salary_information_and_seed():
@@ -93,25 +94,24 @@ def gather_player_salary_information_and_seed():
                 player_name = contract.name
                 player_in_db = db.query(Player).filter(Player.name == player_name).first()
                 formatted_avp = contract.average_per_year.replace("$", "").replace(',', '')
-                formatted_salary = contract.average_per_year.replace("$", "").replace(',', '')
-                formatted_guarantee = contract.average_per_year.replace("$", "").replace(',', '')
-
+                formatted_salary = contract.total_value.replace("$", "").replace(',', '')  # Use contract.total_value here
+                formatted_guarantee = contract.guaranteed.replace("$", "").replace(',', '')  # Use contract.guaranteed here
 
                 salary = Salary(
                     player_id=player_in_db.id if player_in_db is not None else None,
                     year_signed=contract.year_signed,
                     team=contract.team,
                     average_per_year=int(formatted_avp),
-                    salary_amount=int(formatted_salary),
+                    total_value=int(formatted_salary),
                     guaranteed=int(formatted_guarantee),
                     position=contract.position
                 )
                 salary_objects.append(salary) 
 
-
     db.add_all(salary_objects)
     db.commit()
     print(f"Player's salary data added to the database")
+
 
 if __name__ == "__main__":
     gather_player_salary_information_and_seed()

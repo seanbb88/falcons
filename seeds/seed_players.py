@@ -3,16 +3,12 @@ import requests
 from database import db  
 from models import Club, Player
 from utils.loaders import print_progress_dots  
-from .constants import SPORTS_IO_API_KEY
-
-
-SPORTS_API_URL = "https://api.sportsdata.io/v3/nfl/scores/json/PlayersBasic/"
-SPORTS_API_KEY = f"?key={SPORTS_IO_API_KEY}"
+from utils.constants import PLAYER_SEED_URL_BEGINNING, PLAYER_SEED_URL_ENDING
 
 
 def fetch_sportsio_player_data(team_abbrv):
     try:
-        full_url = SPORTS_API_URL + team_abbrv + SPORTS_API_KEY
+        full_url = PLAYER_SEED_URL_BEGINNING + team_abbrv + PLAYER_SEED_URL_ENDING
         response = requests.get(full_url)
 
         if response.status_code == 200:

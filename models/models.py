@@ -52,6 +52,9 @@ class Player(Base):
     
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, onupdate=func.now())
+    
+    def __str__(self):
+        return self.name
 
 class History(Base):
     __tablename__ = "player_history"
@@ -90,7 +93,7 @@ class Salary(Base):
     year_signed = Column(String, nullable=True)
     team = Column(String, nullable=True)
     average_per_year = Column(Integer, nullable=True)
-    salary_amount =  Column(Integer, nullable=True)
+    total_value =  Column(Integer, nullable=True)
     guaranteed =  Column(Integer, nullable=True)
     position = Column(String)
     def name(self):

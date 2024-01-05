@@ -3,16 +3,12 @@ import requests
 from database import db  
 from models import Club
 from utils.loaders import print_progress_dots 
-from .constants import SPORTS_IO_API_KEY, SPORTS_RADAR_API_KEY
-
-
-CLUBS_SPORTSIO_API_URL = f"https://api.sportsdata.io/v3/nfl/scores/json/TeamsBasic?key={SPORTS_IO_API_KEY}"
-CLUBS_SPORTSRADAR_API_URL = f"http://api.sportradar.us/nfl/official/trial/v7/en/league/hierarchy.json?api_key={SPORTS_RADAR_API_KEY}"
+from utils.constants import CLUB_SEED_URL_SPORTS_IO, CLUB_SEED_URL_SPORTS_RADAR
 
 
 def fetch_sportsio_club_data():
     try:
-        response = requests.get(CLUBS_SPORTSIO_API_URL)
+        response = requests.get(CLUB_SEED_URL_SPORTS_IO)
 
         if response.status_code == 200:
             data = response.json()
@@ -28,7 +24,7 @@ def fetch_sportsio_club_data():
 def fetch_radar_club_data():
     try:
         nfl_teams = []
-        response = requests.get(CLUBS_SPORTSRADAR_API_URL)
+        response = requests.get(CLUB_SEED_URL_SPORTS_RADAR)
 
         if response.status_code == 200:
             data = response.json()

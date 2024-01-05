@@ -6,11 +6,8 @@ from database import db
 from models import  Player, Club, History
 from utils.dates import days_in_month, idx_to_month_str
 from utils.loaders import print_progress_dots  
-from .constants import SPORTS_IO_API_KEY
+from utils.constants import HISTORY_SEED_URL_BEGINNING, HISTORY_SEED_URL_ENDING
 
-
-BEGINING_API_URL = "https://api.sportsdata.io/v3/nfl/stats/json/PlayerGameStatsByWeek/"
-END_API_URL = f"?key={SPORTS_IO_API_KEY}"
 
 year_options = ["2023", "2022", "2021"]
       
@@ -63,7 +60,7 @@ def fetch_player_history_data():
     for selected_year in year_options:
         for week in range(1, 17):
             try:
-                full_url = BEGINING_API_URL + selected_year + "/" + str(week) + END_API_URL
+                full_url = HISTORY_SEED_URL_BEGINNING + selected_year + "/" + str(week) + HISTORY_SEED_URL_ENDING
                 print(f"Gathering player history data for {selected_year} week - {week}")
 
                 response = requests.get(full_url)
