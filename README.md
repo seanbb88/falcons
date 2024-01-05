@@ -14,7 +14,7 @@ Before using the app, you'll need to initialize the database. Follow these steps
 
 2. The app will create the necessary database if it doesn't already exist.
 
-### Database Initialization
+### Database Schema
 -A more detailed database schema can be found [here](https://github.com/seanbb88/falcons/blob/main/database_schema_doc.md)
 
 ### Data Population
