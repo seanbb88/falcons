@@ -1,8 +1,7 @@
-
 import requests
-from database import db  
+from database import SessionLocal
 from models import Club, Player
-from utils.loaders import print_progress_dots  
+from utils.loaders import print_progress_dots
 from utils.constants import PLAYER_SEED_URL_BEGINNING, PLAYER_SEED_URL_ENDING
 
 
@@ -13,7 +12,6 @@ def fetch_sportsio_player_data(team_abbrv):
 
         if response.status_code == 200:
             data = response.json()
-            
             return data
         else:
             print(f"API ERROR: {response.status_code}")
@@ -22,15 +20,14 @@ def fetch_sportsio_player_data(team_abbrv):
         print(f"API ERROR: {str(e)}")
         return None
 
-    
-def maybe_add_player(player_data, club_id):
-    existing_player = db.query(Player).filter(
+def maybe_add_player(session, player_data, club_id):
+    existing_player = session.query(Player).filter(
         Player.name == player_data.get("Name"),
         Player.weight == player_data.get("Weight"),
         Player.height == player_data.get("Height"),
         Player.age == player_data.get("Age")
     ).first()
-    
+
     if not existing_player:
         player = Player(
             name=player_data.get("Name"),
@@ -47,37 +44,41 @@ def maybe_add_player(player_data, club_id):
             status=player_data.get("Status"),
             headshot_url=player_data.get("UsaTodayHeadshotUrl"),
         )
-        
-        db.add(player)
 
-def should_seed():
-    return db.query(Player).first() is None
+        session.add(player)
+
+def should_seed(session):
+    return session.query(Player).first() is None
 
 def seed_players():
     print("BEGIN PLAYERS SEEDING")
     print_progress_dots(12)
-    
-    if should_seed():
-        club_data = db.query(Club).all()  
-        if club_data:
-            for club in club_data:
-                team_abbrv = club.abbrv
-                club_name = club.name
-                club_id = club.id
-                data = fetch_sportsio_player_data(team_abbrv)
-                
-                if data:
-                    for player_data in data:
-                        maybe_add_player(player_data, club_id)
-                    
-                    db.commit()
-                    print(f"Players data added to database for the {club_name}")
-            
-            print("All player positions have been seeded. Exiting.")
-        else:
-            print("No data to seed")
-    else:
-        print("Players data already exists in the database. Skipping seeding.")
+
+    try:
+        with SessionLocal() as session:
+            if should_seed(session):
+                club_data = session.query(Club).all()
+                if club_data:
+                    for club in club_data:
+                        team_abbrv = club.abbrv
+                        club_name = club.name
+                        club_id = club.id
+                        data = fetch_sportsio_player_data(team_abbrv)
+
+                        if data:
+                            for player_data in data:
+                                maybe_add_player(session, player_data, club_id)
+
+                            session.commit()
+                            print(f"Players data added to database for {club_name}")
+
+                    print("All player positions have been seeded. Exiting.")
+                else:
+                    print("No data to seed")
+            else:
+                print("Players data already exists in the database. Skipping seeding.")
+    except Exception as e:
+        print(f"Error: {e}")
 
 if __name__ == "__main__":
     seed_players()

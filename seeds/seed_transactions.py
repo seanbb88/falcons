@@ -2,7 +2,7 @@
 from datetime import datetime
 import time
 import requests
-from database import db 
+from database import SessionLocal, db 
 from models import Transactions, Player, Club
 from utils.dates import days_in_month, idx_to_month_str
 from utils.loaders import print_progress_dots  
@@ -68,38 +68,42 @@ def seed_transactions():
     print("BEGIN PLAYER TRANSACTIONS SEEDING")
     print_progress_dots(12)
 
-    existing_records = db.query(Transactions).filter(Transactions.transaction_year == '2023').first()
+    try:
+        with SessionLocal() as session:
+            existing_records = session.query(Transactions).filter(Transactions.transaction_year == '2023').first()
 
-    if not existing_records:
-        data = fetch_player_transaction_data()
+            if not existing_records:
+                data = fetch_player_transaction_data()
 
-        if data:
-            for transaction in data:
-                from_club = transaction["from_club"]
-                to_club = transaction["to_club"]
-                player_in_db = db.query(Player).filter(Player.name == transaction.get("name")).first()
-                sending_club = db.query(Club).filter(Club.alias == from_club).first()
-                receiving_club = db.query(Club).filter(Club.alias == to_club).first()
+                if data:
+                    for transaction in data:
+                        from_club = transaction["from_club"]
+                        to_club = transaction["to_club"]
+                        player_in_db = session.query(Player).filter(Player.name == transaction.get("name")).first()
+                        sending_club = session.query(Club).filter(Club.alias == from_club).first()
+                        receiving_club = session.query(Club).filter(Club.alias == to_club).first()
 
-                transactions = Transactions(
-                    name=transaction.get("name"),
-                    player_id=player_in_db.id if player_in_db is not None else None,
-                    type=transaction.get("transaction_type"),
-                    date=transaction.get("effective_date"),
-                    position=transaction.get("position"),
-                    description=transaction.get("description"),
-                    sending_club_id=sending_club.id if sending_club is not None else None,
-                    receiving_club_id=receiving_club.id if receiving_club is not None else None,
-                    transaction_year='2023'
-                )
+                        transactions = Transactions(
+                            name=transaction.get("name"),
+                            player_id=player_in_db.id if player_in_db is not None else None,
+                            type=transaction.get("transaction_type"),
+                            date=transaction.get("effective_date"),
+                            position=transaction.get("position"),
+                            description=transaction.get("description"),
+                            sending_club_id=sending_club.id if sending_club is not None else None,
+                            receiving_club_id=receiving_club.id if receiving_club is not None else None,
+                            transaction_year='2023'
+                        )
 
-                db.add(transactions)
-                db.commit()
-            print(f"Player's transaction data added to the database for 2023")
-        else:
-            print(f"No data for selected year to seed")
-    else:
-        print(f"Transactions data for 2023 already exists in the database.")
+                        session.add(transactions)
+                    session.commit()
+                    print(f"Player's transaction data added to the database for 2023")
+                else:
+                    print(f"No data for selected year to seed")
+            else:
+                print(f"Transactions data for 2023 already exists in the database.")
+    except Exception as e:
+        print(f"Error: {e}")
 
 if __name__ == "__main__":
     seed_transactions()

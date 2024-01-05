@@ -43,9 +43,9 @@ def run_sql_query_and_print_results_for_position():
 
         results = result.fetchall()
         
-        print("------------------------")
+        print("--------------------------------------")
         print("TOP 100 PLAYERS BY PERCENTILE/POSITION")
-        print("------------------------")
+        print("--------------------------------------")
         print("{:<25} {:<10} {:<25} {:<15}".format("Player Name", "Player ID", "Play Percentile", "Position"))
         for row in results:
             player_name, play_percentile, player_id, position = row

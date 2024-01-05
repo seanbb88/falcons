@@ -32,6 +32,7 @@ def player_by_season_query():
             func.sum(History.offensive_plays).label("total_sum_offense"),
             func.sum(History.defensive_plays).label("total_sum_defense")
         )
+        .filter(History.player_id.isnot(None))
         .group_by(History.player_id, History.season, History.name)
     )
 
@@ -48,6 +49,7 @@ def player_by_position_query():
             func.sum(History.offensive_plays).label("total_sum_offense"),
             func.sum(History.defensive_plays).label("total_sum_defense")
         )
+        .filter(History.player_id.isnot(None))
         .group_by(History.player_id, History.position, History.name)
     )
 
@@ -64,6 +66,7 @@ def player_by_club_query():
             func.sum(History.offensive_plays).label("total_sum_offense"),
             func.sum(History.defensive_plays).label("total_sum_defense")
         )
+        .filter(History.player_id.isnot(None))
         .group_by(History.player_id, History.team, History.name)
     )
 
@@ -170,7 +173,7 @@ def perform_player_rankings():
         skip_to_results = input("Skip to results? (Answer y or n): ").strip().lower()
 
         if skip_to_results != 'y':
-            print("SO WE ARE OUT HERE THEN")
+            print("seeding...")
             player_by_season_query()
             player_by_club_query()
             player_by_position_query()

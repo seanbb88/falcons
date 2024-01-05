@@ -27,9 +27,9 @@ def run_sql_query_and_print_results_for_players_compared_to_total_values(total_v
 
         results = result.fetchall()
         
-        print("------------------------")
+        print("------------------------------------------------------------------------------------------------------------------------")
         print("TOTAL VALUE PERCENTAGES - (top 250 players total value percentages compared to the top, middle, and lower paid players)")
-        print("------------------------")
+        print("------------------------------------------------------------------------------------------------------------------------")
         print("{:<10} {:<20} {:<15} {:<20} {:<20} {:<20}".format("Season", "Player Name", "Total Value", "Percentage/bottom", "Percentage/middle", "Percentage/top"))
 
         for row in results:
@@ -84,9 +84,9 @@ def run_sql_query_and_print_results_for_salary_by_year():
 
         results = result.fetchall()
 
-        print("------------------------")
+        print("-------------------------------------")
         print("TOP AVERAGE PER YEAR SALARY BY YEAR")
-        print("------------------------")
+        print("-------------------------------------")
         print("{:<10} {:<20} {:<25} {:<20} {:<20}".format("Season", "Player Name", "Average Per Year", "Club", "Position"))
 
         for row in results:
@@ -135,9 +135,9 @@ def run_sql_query_and_print_results_for_salary_by_club():
 
         results = result.fetchall()
 
-        print("------------------------")
+        print("------------------------------------------------")
         print("TOP AVERAGE PER YEAR SALARY BY CLUB (2020-2023)")
-        print("------------------------")
+        print("------------------------------------------------")
         print("{:<15} {:<25} {:<25} {:<10} {:<20}".format("Club", "Player Name", "Average Per Year", "Season", "Position"))
 
         for row in results:
