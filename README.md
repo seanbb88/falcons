@@ -3,6 +3,7 @@
 This app is designed to initialize and populate databases, perform data retrieval, and make calculations based on the stored data. It serves as a tool to manage and analyze data related to various entities, such as clubs, players, transactions, history & salary.
 
 ## Features
+
 ### Database Initialization
 
 Before using the app, you'll need to initialize the database. Follow these steps:
@@ -11,8 +12,10 @@ Before using the app, you'll need to initialize the database. Follow these steps
 
    Example connection string: `"postgresql://your_username:your_password@localhost/"`
 
-
 2. The app will create the necessary database if it doesn't already exist.
+
+### Database Initialization
+-A more detailed database schema can be found [here](https://github.com/seanbb88/falcons/blob/main/database_schema_doc.md)
 
 ### Data Population
 
@@ -33,7 +36,7 @@ The app populates the database with the following data:
 - Season Aggregation:
 datasets that consists of the total offensive and defensive team plays per either club, season, or position over the gathered data period (2021 - 2023)
 
--Player Rankings:
+- Player Rankings:
 dataset that consists of players player percentile rank compared to the above data for clubs, positions, and seasons
 
 
@@ -42,6 +45,8 @@ dataset that consists of players player percentile rank compared to the above da
 The app can perform various calculations and analysis on the stored data:
 
 - **Play Aggregation**: several tables are created that rank the players on play time (by percentile) for several categories (club, season, position)
+
+- **Salary Rankings**: using the data pulled from a webscrape this application prints out some visual comparisons of players salaries 
 
 ### Rankings
 
@@ -64,7 +69,7 @@ A condenced output of these aggregations are printed in the console as well.
 
 3. Navigate to the app's root directory.
 
-4. Update the database connection string in `database.py` to match your PostgreSQL setup.
+4. Update the database connection string in `database.py` to match your local connection string.
 
 5. Run `pip install -r requirements.txt` to install external dependencies.
 
