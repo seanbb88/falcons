@@ -1,5 +1,9 @@
 # Byte-compiled / optimized Python files
 __pycache__/
+models/__pycache__/
+utils/__pycache__/
+views/__pycache__/
+web_scrape/__pycache__
 *.pyc
 *.pyo
 *.pyd
