@@ -36,17 +36,20 @@ def calculate_season_totals(data):
     season_totals = {}
 
     for entry in data:
+        print("ENTRY", entry.season, entry.offensive_team_plays, entry.defensive_team_plays)
         season = entry.season
         offensive_team_plays = entry.offensive_team_plays
         defensive_team_plays = entry.defensive_team_plays
 
         if season in season_totals:
-            season_totals[season]['offensive_team_plays'] += offensive_team_plays
-            season_totals[season]['defensive_team_plays'] += defensive_team_plays
+            if offensive_team_plays is not None:
+                season_totals[season]['offensive_team_plays'] += offensive_team_plays
+            if defensive_team_plays is not None:
+                season_totals[season]['defensive_team_plays'] += defensive_team_plays
         else:
             season_totals[season] = {
-                'offensive_team_plays': offensive_team_plays,
-                'defensive_team_plays': defensive_team_plays
+                'offensive_team_plays': offensive_team_plays if offensive_team_plays is not None else 0,
+                'defensive_team_plays': defensive_team_plays if defensive_team_plays is not None else 0
             }
 
     return season_totals
@@ -80,7 +83,7 @@ def seed_season_ag():
         return
 
     flattened_data = flatten_unique_season_data()
-
+    
     if flattened_data:
         season_totals_data = calculate_season_totals(flattened_data)
         

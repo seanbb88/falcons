@@ -8,7 +8,7 @@ def flatten_unique_position_data():
     all_data = []
     
     subquery = (
-        db.query(func.min(History.id).label("min_id")).group_by(History.position, History.club_id, History.week).subquery())
+        db.query(func.min(History.id).label("min_id")).group_by(History.position, History.week).subquery())
 
     unique_rows_by_position = (
         db.query(History).join(subquery, History.id == subquery.c.min_id).all())
@@ -86,7 +86,6 @@ def seed_position_ag():
 
         if position_totals_data:
             add_position_aggregations(position_totals_data)
-            print("Position aggregations added to the database")
 
     else:
         print("No data to seed.")

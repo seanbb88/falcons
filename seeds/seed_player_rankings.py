@@ -111,7 +111,7 @@ def perform_calculations_and_update(player_data, column_name):
             def_percentile = calculate_percentile(defensive_plays_array, result.total_sum_offense)
             
     
-            player_ranking_aggregation = db.query(PlayerRankingPositionAggregation).filter_by(player_id=player_id).first()
+            player_ranking_aggregation = db.query(PlayerRankingPositionAggregation).filter_by(player_id=player_id, position=position).first()
             
             if player_ranking_aggregation:
                 db.query(PlayerRankingPositionAggregation).filter_by(player_id=player_id, position=position).update({

@@ -54,7 +54,7 @@ def fetch_player_history_data():
     all_data = []
 
     for selected_year in year_options:
-        for week in range(1, 17):
+        for week in range(1, 18):
             try:
                 full_url = HISTORY_SEED_URL_BEGINNING + selected_year + "/" + str(week) + HISTORY_SEED_URL_ENDING
                 print(f"Gathering player history data for {selected_year} week - {week}")
