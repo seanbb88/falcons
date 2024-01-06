@@ -95,8 +95,8 @@ def gather_player_salary_information_and_seed():
                 player_name = contract.name
                 player_in_db = db.query(Player).filter(Player.name == player_name).first()
                 formatted_avp = contract.average_per_year.replace("$", "").replace(',', '')
-                formatted_salary = contract.total_value.replace("$", "").replace(',', '')  # Use contract.total_value here
-                formatted_guarantee = contract.guaranteed.replace("$", "").replace(',', '')  # Use contract.guaranteed here
+                formatted_salary = contract.total_value.replace("$", "").replace(',', '')  
+                formatted_guarantee = contract.guaranteed.replace("$", "").replace(',', '')
 
                 salary = Salary(
                     player_id=player_in_db.id if player_in_db is not None else None,

@@ -35,7 +35,6 @@ def run_sql_query_and_print_results_for_players_compared_to_total_values(total_v
         for row in results:
             year_signed, total_value, name = row
       
-            # Calculate percentages here
             percentage_from_bottom = ((total_value - total_values[0][1]) / total_values[0][1]) * 100
             percentage_from_median = ((total_value - total_values[1][1]) / total_values[1][1]) * 100
             percentage_from_top = ((total_value - total_values[2][1]) / total_values[2][1]) * 100

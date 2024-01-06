@@ -1,8 +1,6 @@
-
-from datetime import datetime
 import time
 import requests
-from database import SessionLocal, db 
+from database import SessionLocal 
 from models import Transactions, Player, Club
 from utils.dates import days_in_month, idx_to_month_str
 from utils.loaders import print_progress_dots  
