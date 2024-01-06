@@ -23,7 +23,7 @@ Before using the app, you'll need to initialize the database. Follow these steps
 
 1. Provide your PostgreSQL connection string in the `database.py` file.
 
-   Example connection string: `"postgresql://your_username:your_password@localhost/"`
+   Example connection string: `"postgresql://your_username:your_password@localhost/"` <- be sure to include trailing /
 
 2. The app will create the necessary database if it doesn't already exist.
 
