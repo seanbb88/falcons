@@ -18,7 +18,7 @@ from views.visualize_player_salary_results import run_salary_queries
 from web_scrape.salary_scrape import gather_player_salary_information_and_seed
 
 
-def main():
+def initialize():
     initialize_database()
     seed_clubs()
     seed_players()
@@ -27,14 +27,22 @@ def main():
     seed_club_ag()
     seed_season_ag()
     seed_position_ag()
+
+def gather_information():
     gather_player_salary_information_and_seed()
     seed_player_rankings_ag()
+
+def visualize_results():
     run_sql_query_and_print_results_for_season()
     run_sql_query_and_print_results_for_club()
     run_sql_query_and_print_results_for_position()
     run_salary_queries()
-    print_finished_message()
 
+def main():
+    initialize()
+    gather_information()
+    visualize_results()
+    print_finished_message()
 
 if __name__ == "__main__":
     main()

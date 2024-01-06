@@ -14,6 +14,22 @@ Before using the app, you'll need to initialize the database. Follow these steps
 
 2. The app will create the necessary database if it doesn't already exist.
 
+
+## Getting Started
+
+1. Ensure you have PostgreSQL & python installed on your system.
+
+2. Clone this repository to your local machine.
+
+3. Navigate to the app's root directory.
+
+4. Update the database connection string in `database.py` to match your local connection string.
+
+5. Run `pip install -r requirements.txt` to install external dependencies.
+
+6. Run the app by executing `python main.py`.
+
+
 ### Database Schema
 -A more detailed database schema can be found [here](https://github.com/seanbb88/falcons/blob/main/database_schema_doc.md)
 
@@ -59,21 +75,6 @@ A condenced output of these aggregations are printed in the console as well.
 - PlayerRankingPositionAggregation: A data set that ranks players play percentile per position over the gathered data period (2021 - 2023)
 
 - PlayerRankingClubAggregation: A data set that ranks players play percentile per club over the gathered data period (2021 - 2023)
-
-
-## Getting Started
-
-1. Ensure you have PostgreSQL & python installed on your system.
-
-2. Clone this repository to your local machine.
-
-3. Navigate to the app's root directory.
-
-4. Update the database connection string in `database.py` to match your local connection string.
-
-5. Run `pip install -r requirements.txt` to install external dependencies.
-
-6. Run the app by executing `python main.py`.
 
 
 ## Contributors

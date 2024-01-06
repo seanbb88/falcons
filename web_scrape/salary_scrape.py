@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from database import db 
 from models.models import Player, Salary
+from utils.loaders import print_progress_dots
 
 class PlayerContract:
     def __init__(self, name, team, year_signed, total_years, total_value, average_per_year, guaranteed, position):
@@ -78,6 +79,7 @@ def skip_seeding():
         
 def gather_player_salary_information_and_seed():
     print("SCRAPING AND SAVING PLAYER SALARY DATA")
+    print_progress_dots(12)
     salary_objects = [] 
     
     if skip_seeding():
@@ -109,8 +111,7 @@ def gather_player_salary_information_and_seed():
 
     db.add_all(salary_objects)
     db.commit()
-    print(f"Player's salary data added to the database")
-
+   
 
 if __name__ == "__main__":
     gather_player_salary_information_and_seed()

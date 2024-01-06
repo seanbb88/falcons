@@ -1,9 +1,5 @@
-from datetime import datetime
-import time
 import requests
 from database import SessionLocal
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 from models import Player, Club, History
 from utils.loaders import print_progress_dots
 from utils.constants import HISTORY_SEED_URL_BEGINNING, HISTORY_SEED_URL_ENDING

@@ -3,6 +3,7 @@ __pycache__/
 models/__pycache__/
 utils/__pycache__/
 views/__pycache__/
+seeds/__pycache__/
 web_scrape/__pycache__/
 *.pyc
 *.pyo

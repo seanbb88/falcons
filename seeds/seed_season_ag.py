@@ -86,7 +86,6 @@ def seed_season_ag():
         
         if season_totals_data:
             add_season_aggregations(season_totals_data)
-            print("Season aggregations added to database")
 
     else:
         print("No data to seed.")
