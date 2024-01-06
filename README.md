@@ -1,8 +1,6 @@
 ## Overview
 
-This app is designed to initialize and populate databases, perform data retrieval, and make calculations based on the stored data. It serves as a tool to manage and analyze data related to various entities, such as clubs, players, transactions, history & salary.
-
-## Features
+This app is designed to initialize and populate databases, perform data retrieval using public information from the internet.Then some calculations are made based on the stored data. It serves as a tool to manage and analyze data related to various entities, such as clubs, players, transactions, history & salary for the nfl.
 
 ### Database Initialization
 
@@ -75,6 +73,10 @@ A condenced output of these aggregations are printed in the console as well.
 - PlayerRankingPositionAggregation: A data set that ranks players play percentile per position over the gathered data period (2021 - 2023)
 
 - PlayerRankingClubAggregation: A data set that ranks players play percentile per club over the gathered data period (2021 - 2023)
+
+## Data Population
+-Sports Radar API - https://sportradar.com/
+-Sports Data IO - https://sportsdata.io/
 
 
 ## Contributors

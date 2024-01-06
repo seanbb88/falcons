@@ -1,5 +1,5 @@
-SPORTS_IO_API_KEY = "6f1ce3bc195a49ddae34cb0ff638b63c"
-SPORTS_RADAR_API_KEY = "shjkk5b842b28jncxxm9dp55"
+SPORTS_IO_API_KEY = "21741b49743544a3abce2c126423ba55"
+SPORTS_RADAR_API_KEY = "xbz8caeccxd5wwdrsyt5mt8q"
 
 PLAYER_SEED_URL_BEGINNING = "https://api.sportsdata.io/v3/nfl/scores/json/PlayersBasic/"
 PLAYER_SEED_URL_ENDING = f"?key={SPORTS_IO_API_KEY}"

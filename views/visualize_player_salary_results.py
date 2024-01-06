@@ -85,7 +85,7 @@ def run_sql_query_and_print_results_for_salary_by_year():
         results = result.fetchall()
 
         print("-------------------------------------")
-        print("TOP AVERAGE PER YEAR SALARY BY YEAR")
+        print("TOP AVERAGE PER YEAR SALARY FOR EACH YEAR")
         print("-------------------------------------")
         print("{:<10} {:<20} {:<25} {:<20} {:<20}".format("Season", "Player Name", "Average Per Year", "Club", "Position"))
 

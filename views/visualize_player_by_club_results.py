@@ -59,7 +59,7 @@ def run_sql_query_and_print_results_for_club():
 
 
         print("------------------------")
-        print("TOP PLAYERS BY CLUB")
+        print("TOP PLAYERS FOR EACH CLUB")
         print("------------------------")
         print("{:<10} {:<25} {:<25} {:<25} {:<25}".format("Club", "Top Offensive Player", "Offensive Percentile", "Top Defensive Player", "Defensive Percentile"))
         for row in results:

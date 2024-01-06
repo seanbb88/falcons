@@ -35,7 +35,7 @@ def run_sql_query_and_print_results_for_season():
         results = result.fetchall()
 
         print("---------------------------------------------------")
-        print("TOP 25 PLAYERS BY PERCENTILE PER SEASON (2021-2023)")
+        print("TOP 25 PLAYERS BY PERCENTILE PER EACH SEASON (2021-2023)")
         print("----------------------------------------------------")
         print("{:<10} {:<20} {:<25}".format("Season", "Name", "Play Percentile"))
         for row in results:

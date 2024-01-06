@@ -31,11 +31,18 @@ def run_sql_query_and_print_results_for_position():
                 play_percentile,
                 player_id,
                 position
-            FROM
-                top_percentiles
-            ORDER BY
-                play_percentile DESC
-            LIMIT 100
+            FROM (
+                SELECT
+                    player_name,
+                    play_percentile,
+                    player_id,
+                    position,
+                    ROW_NUMBER() OVER (PARTITION BY position ORDER BY play_percentile DESC) AS rn
+                FROM
+                    top_percentiles
+            ) ranked_top_percentiles
+            WHERE
+                rn = 1;
         """
 
         with engine.connect() as connection:
@@ -44,7 +51,7 @@ def run_sql_query_and_print_results_for_position():
         results = result.fetchall()
         
         print("--------------------------------------")
-        print("TOP 100 PLAYERS BY PERCENTILE/POSITION")
+        print("TOP PLAYERS BY PERCENTILE FOR EACH POSITION")
         print("--------------------------------------")
         print("{:<25} {:<10} {:<25} {:<15}".format("Player Name", "Player ID", "Play Percentile", "Position"))
         for row in results:
