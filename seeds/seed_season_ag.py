@@ -36,7 +36,6 @@ def calculate_season_totals(data):
     season_totals = {}
 
     for entry in data:
-        print("ENTRY", entry.season, entry.offensive_team_plays, entry.defensive_team_plays)
         season = entry.season
         offensive_team_plays = entry.offensive_team_plays
         defensive_team_plays = entry.defensive_team_plays
