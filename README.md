@@ -2,6 +2,21 @@
 
 This app is designed to initialize and populate databases, perform data retrieval using public information from the internet.Then some calculations are made based on the stored data. It serves as a tool to manage and analyze data related to various entities, such as clubs, players, transactions, history & salary for the nfl.
 
+## Getting Started
+
+1. Ensure you have PostgreSQL & python installed on your system.
+
+2. Clone this repository to your local machine.
+
+3. Navigate to the app's root directory.
+
+4. Update the database connection string in `database.py` to match your local connection string. (instructions below)
+
+5. Run `pip install -r requirements.txt` to install external dependencies.
+
+6. Run the app by executing `python main.py`.
+
+
 ### Database Initialization
 
 Before using the app, you'll need to initialize the database. Follow these steps:
@@ -12,20 +27,6 @@ Before using the app, you'll need to initialize the database. Follow these steps
 
 2. The app will create the necessary database if it doesn't already exist.
 
-
-## Getting Started
-
-1. Ensure you have PostgreSQL & python installed on your system.
-
-2. Clone this repository to your local machine.
-
-3. Navigate to the app's root directory.
-
-4. Update the database connection string in `database.py` to match your local connection string.
-
-5. Run `pip install -r requirements.txt` to install external dependencies.
-
-6. Run the app by executing `python main.py`.
 
 
 ### Database Schema
