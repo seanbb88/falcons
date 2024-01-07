@@ -6,7 +6,7 @@ from models import Club, Player, Transactions, History, Salary, PositionAggregat
 from utils.loaders import print_progress_dots
 
 
-local_connection_string = "postgresql://seanbrown:password@localhost/"
+local_connection_string = "postgresql://username:password@localhost/"
 database = 'falcons'
 full_connection_string = local_connection_string + database
 
