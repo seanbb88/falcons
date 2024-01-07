@@ -1,9 +1,7 @@
 ## Overview
-
-This app is designed to initialize and populate databases, perform data retrieval using public information from the internet.Then some calculations are made based on the stored data. It serves as a tool to manage and analyze data related to various entities, such as clubs, players, transactions, history & salary for the nfl.
+This app is designed to initialize and populate databases, perform data retrieval using public information from the internet, then perform some calculations based off that stored data. It serves as a tool to manage and analyze data related to various entities, such as clubs, players, transactions, history & salary for the nfl.
 
 ## Getting Started
-
 1. Ensure you have PostgreSQL & python installed on your system.
 
 2. Clone this repository to your local machine.
@@ -18,7 +16,6 @@ This app is designed to initialize and populate databases, perform data retrieva
 
 
 ### Database Initialization
-
 Before using the app, you'll need to initialize the database. Follow these steps:
 
 1. Provide your PostgreSQL connection string in the `database.py` file.
@@ -33,7 +30,6 @@ Before using the app, you'll need to initialize the database. Follow these steps
 -A more detailed database schema can be found [here](https://github.com/seanbb88/falcons/blob/main/database_schema_doc.md)
 
 ### Data Population
-
 The app populates the database with the following data:
 
 - Clubs: Information about sports clubs, including names, aliases, owners, and more.
@@ -54,7 +50,6 @@ dataset that consists of players player percentile rank compared to the above da
 
 
 ### Calculations
-
 The app can perform various calculations and analysis on the stored data:
 
 - **Play Aggregation**: several tables are created that rank the players on play time (by percentile) for several categories (club, season, position)
@@ -62,7 +57,6 @@ The app can perform various calculations and analysis on the stored data:
 - **Salary Rankings**: using the data pulled from a webscrape this application prints out some visual comparisons of players salaries 
 
 ### Rankings
-
 Several more tables are created that rank the players on plays played across the three agregated datasets (club, position, & season):
 
 A condenced output of these aggregations are printed in the console as well.
@@ -79,5 +73,4 @@ A condenced output of these aggregations are printed in the console as well.
 
 
 ## Contributors
-
 - Sean Brown
